@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran QRIS & Dana</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wgARCAQ4BDgDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIQAxAAAAH/xAAUEAEAAAAAAAAAAAAAAAAAAAAw/9oACAEBAAEFAn//xAAUEQEAAAAAAAAAAAAAAAAAAAAw/9oACAEDAQE/AX//xAAUEQEAAAAAAAAAAAAAAAAAAAAw/9oACAECAQE/AX//xAAUEAEAAAAAAAAAAAAAAAAAAAAw/9oACAEBAAY/Ap//xAAUEAEAAAAAAAAAAAAAAAAAAAAw/9oACAEBAAH/At//2Q==');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            background-color: rgba(245, 247, 250, 0.9);
+        }
+        
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #1a237e;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .payment-section {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .payment-section:hover {
+            transform: translateY(-5px);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a237e;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #2962ff;
+        }
+        
+        .qris-container {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .qris-image {
+            max-width: 250px;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+        }
+        
+        .qris-info {
+            background-color: #e8f0fe;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .info-value {
+            color: #1a237e;
+            font-weight: 700;
+        }
+        
+        .dana-payment {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .dana-info {
+            background: linear-gradient(135deg, #00b5ff 0%, #0081cc 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 181, 255, 0.2);
+        }
+        
+        .dana-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .dana-logo i {
+            font-size: 2.5rem;
+        }
+        
+        .dana-logo h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .dana-detail {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .dana-number {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin: 10px 0;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .dana-name {
+            font-size: 1.2rem;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        .tutorial {
+            margin-top: 30px;
+        }
+        
+        .tutorial ol {
+            padding-left: 20px;
+            margin-top: 15px;
+        }
+        
+        .tutorial li {
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+        
+        .tutorial li strong {
+            color: #1a237e;
+        }
+        
+        .note {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 25px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .step-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background-color: #2962ff;
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .payment-section {
+                min-width: 100%;
+            }
+            
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .header {
+                margin-bottom: 0;
+            }
+        }
+        
+        .highlight {
+            color: #d32f2f;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">INVISIBLE</div>
+            <div class="subtitle">Sistem Pembayaran Digital yang Cepat dan Aman</div>
+        </div>
+        
+        <div class="content">
+            <div class="payment-section">
+                <h2 class="section-title"><i class="fas fa-qrcode"></i> Pembayaran dengan QRIS</h2>
+                
+                <div class="qris-container">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=ID1025383834039%20-%20INVISIBLE%20PAYMENT&format=png&margin=10" alt="QRIS Code" class="qris-image">
+                    <p>Scan QR Code di atas untuk melakukan pembayaran</p>
+                    
+                    <div class="qris-info">
+                        <div class="info-item">
+                            <span class="info-label">Standar:</span>
+                            <span class="info-value">QR Code Standar Pembayaran Nasional</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">NMID:</span>
+                            <span class="info-value">ID1025383834039</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Jaringan:</span>
+                            <span class="info-value">GPN (Gerbang Pembayaran Nasional)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tutorial">
+                    <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Cara Pembayaran dengan QRIS</h3>
+                    <ol>
+                        <li><span class="step-icon">1</span> <strong>Buka aplikasi e-wallet atau mobile banking</strong> Anda yang mendukung QRIS</li>
+                        <li><span class="step-icon">2</span> <strong>Pilih menu "Scan QR"</strong> atau fitur serupa di aplikasi Anda</li>
+                        <li><span class="step-icon">3</span> <strong>Arahkan kamera ke QR Code</strong> di atas hingga terdeteksi</li>
+                        <li><span class="step-icon">4</span> <strong>Periksa nominal dan detail transaksi</strong> yang muncul di layar</li>
+                        <li><span class="step-icon">5</span> <strong>Konfirmasi pembayaran</strong> dan masukkan PIN/verifikasi jika diperlukan</li>
+                        <li><span class="step-icon">6</span> <strong>Tunggu konfirmasi sukses</strong> dan simpan bukti pembayaran</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="payment-section">
+                <h2 class="section-title"><i class="fas fa-mobile-alt"></i> Pembayaran dengan Dana</h2>
+                
+                <div class="dana-payment">
+                    <div class="dana-info">
+                        <div class="dana-logo">
+                            <i class="fas fa-wallet"></i>
+                            <h3>DANA</h3>
+                        </div>
+                        <p>Transfer ke nomor DANA berikut untuk pembayaran cepat dan mudah:</p>
+                        
+                        <div class="dana-detail">
+                            <div class="dana-number">0895 3232 47676</div>
+                            <div class="dana-name">Atas Nama: H*******i</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tutorial">
+                        <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Cara Pembayaran dengan Dana</h3>
+                        <ol>
+                            <li><span class="step-icon">1</span> <strong>Buka aplikasi DANA</strong> di smartphone Anda</li>
+                            <li><span class="step-icon">2</span> <strong>Pilih menu "Kirim"</strong> atau "Transfer"</li>
+                            <li><span class="step-icon">3</span> <strong>Masukkan nomor DANA</strong> penerima: <span class="highlight">0895 3232 47676</span></li>
+                            <li><span class="step-icon">4</span> <strong>Verifikasi nama penerima</strong> "H*******i" sebelum melanjutkan</li>
+                            <li><span class="step-icon">5</span> <strong>Masukkan nominal pembayaran</strong> sesuai dengan tagihan</li>
+                            <li><span class="step-icon">6</span> <strong>Tambahkan catatan</strong> (opsional) untuk identifikasi pembayaran</li>
+                            <li><span class="step-icon">7</span> <strong>Konfirmasi dan selesaikan</strong> transaksi dengan PIN DANA Anda</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="note">
+                        <p><strong>Penting:</strong> Pastikan nomor DANA dan nama penerima sudah benar sebelum mengirimkan dana. Setelah pembayaran berhasil, simpan bukti transfer sebagai arsip pribadi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2023 INVISIBLE Payment System. Semua hak dilindungi.</p>
+            <p>Pembayaran diproses melalui sistem yang aman dan terenkripsi.</p>
+        </div>
+    </div>
+
+    <script>
+        // Menambahkan efek interaktif pada QRIS
+        document.querySelector('.qris-image').addEventListener('click', function() {
+            alert('QRIS Code untuk pembayaran. Scan menggunakan aplikasi e-wallet atau mobile banking Anda.');
+        });
+        
+        // Menambahkan efek interaktif pada nomor DANA
+        document.querySelector('.dana-number').addEventListener('click', function() {
+            const danaNumber = '0895323247676';
+            navigator.clipboard.writeText(danaNumber).then(() => {
+                alert('Nomor DANA telah disalin ke clipboard: ' + danaNumber);
+            });
+        });
+        
+        // Menambahkan highlight untuk langkah-langkah tutorial saat dihover
+        const tutorialItems = document.querySelectorAll('.tutorial li');
+        tutorialItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = '#f0f7ff';
+                this.style.padding = '10px';
+                this.style.borderRadius = '8px';
+                this.style.transition = 'all 0.3s ease';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = 'transparent';
+                this.style.padding = '0 0 0 10px';
+            });
+        });
+    </script>
+</body>
+</html>
